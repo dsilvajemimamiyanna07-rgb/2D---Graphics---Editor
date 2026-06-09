@@ -147,6 +147,31 @@ void deleteObject(char canvas[ROWS][COLS],
     }
 }
 
+/* Modify Rectangle */
+void modifyRectangle()
+{
+    int oldX, oldY, oldW, oldH;
+    int newX, newY, newW, newH;
+
+    printf("Enter old rectangle x y width height: ");
+    scanf("%d%d%d%d",
+          &oldX, &oldY,
+          &oldW, &oldH);
+
+    deleteObject(rectCanvas,
+                 oldX, oldY,
+                 oldW, oldH);
+
+    printf("Enter new rectangle x y width height: ");
+    scanf("%d%d%d%d",
+          &newX, &newY,
+          &newW, &newH);
+
+    drawRectangle(rectCanvas,
+                  newX, newY,
+                  newW, newH);
+}
+
 int main()
 {
     int choice;
@@ -158,7 +183,7 @@ int main()
 
     do
     {
-        printf("\n===== GRAPHICS EDITOR =====\n");
+        printf("\n===== 2D GRAPHICS EDITOR =====\n");
         printf("1. Draw Rectangle\n");
         printf("2. Draw Line\n");
         printf("3. Draw Triangle\n");
@@ -168,7 +193,8 @@ int main()
         printf("7. Display Triangle Canvas\n");
         printf("8. Display Circle Canvas\n");
         printf("9. Delete From Rectangle Canvas\n");
-        printf("10. Exit\n");
+        printf("10. Modify Rectangle\n");
+        printf("11. Exit\n");
 
         printf("Enter Choice: ");
         scanf("%d", &choice);
@@ -185,7 +211,6 @@ int main()
                 scanf("%d%d%d%d", &x, &y, &w, &h);
 
                 drawRectangle(rectCanvas, x, y, w, h);
-
                 printf("Rectangle Drawn Successfully\n");
                 break;
             }
@@ -200,7 +225,6 @@ int main()
                 scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
 
                 drawLine(lineCanvas, x1, y1, x2, y2);
-
                 printf("Line Drawn Successfully\n");
                 break;
             }
@@ -215,7 +239,6 @@ int main()
                 scanf("%d%d%d", &x, &y, &h);
 
                 drawTriangle(triCanvas, x, y, h);
-
                 printf("Triangle Drawn Successfully\n");
                 break;
             }
@@ -230,7 +253,6 @@ int main()
                 scanf("%d%d%d", &cx, &cy, &r);
 
                 drawCircle(circleCanvas, cx, cy, r);
-
                 printf("Circle Drawn Successfully\n");
                 break;
             }
@@ -263,12 +285,16 @@ int main()
                 scanf("%d%d%d%d", &x, &y, &w, &h);
 
                 deleteObject(rectCanvas, x, y, w, h);
-
                 printf("Object Deleted Successfully\n");
                 break;
             }
 
             case 10:
+                modifyRectangle();
+                printf("Rectangle Modified Successfully\n");
+                break;
+
+            case 11:
                 printf("Exiting...\n");
                 break;
 
@@ -276,7 +302,7 @@ int main()
                 printf("Invalid Choice\n");
         }
 
-    } while(choice != 10);
+    } while(choice != 11);
 
     return 0;
 }

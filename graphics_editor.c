@@ -6,6 +6,7 @@
 
 char rectCanvas[ROWS][COLS];
 char lineCanvas[ROWS][COLS];
+char triCanvas[ROWS][COLS];
 
 /* Initialize Canvas */
 void initialize(char canvas[ROWS][COLS])
@@ -38,7 +39,7 @@ void display(char canvas[ROWS][COLS])
     }
 }
 
-/* Feature 1: Draw Rectangle */
+/* Rectangle */
 void drawRectangle(char canvas[ROWS][COLS],
                    int x, int y,
                    int width, int height)
@@ -54,7 +55,7 @@ void drawRectangle(char canvas[ROWS][COLS],
     }
 }
 
-/* Feature 2: Draw Line */
+/* Line */
 void drawLine(char canvas[ROWS][COLS],
               int x1, int y1,
               int x2, int y2)
@@ -85,21 +86,46 @@ void drawLine(char canvas[ROWS][COLS],
     }
 }
 
+/* Triangle */
+void drawTriangle(char canvas[ROWS][COLS],
+                  int x, int y,
+                  int height)
+{
+    int i, j;
+
+    for(i = 0; i < height; i++)
+    {
+        for(j = -i; j <= i; j++)
+        {
+            if(x + j >= 0 &&
+               x + j < COLS &&
+               y + i >= 0 &&
+               y + i < ROWS)
+            {
+                canvas[y + i][x + j] = '*';
+            }
+        }
+    }
+}
+
 int main()
 {
     int choice;
 
     initialize(rectCanvas);
     initialize(lineCanvas);
+    initialize(triCanvas);
 
     do
     {
         printf("\n===== GRAPHICS EDITOR =====\n");
         printf("1. Draw Rectangle\n");
         printf("2. Draw Line\n");
-        printf("3. Display Rectangle Canvas\n");
-        printf("4. Display Line Canvas\n");
-        printf("5. Exit\n");
+        printf("3. Draw Triangle\n");
+        printf("4. Display Rectangle Canvas\n");
+        printf("5. Display Line Canvas\n");
+        printf("6. Display Triangle Canvas\n");
+        printf("7. Exit\n");
 
         printf("Enter Choice: ");
         scanf("%d", &choice);
@@ -115,7 +141,8 @@ int main()
                 printf("Enter x y width height: ");
                 scanf("%d%d%d%d", &x, &y, &w, &h);
 
-                drawRectangle(rectCanvas, x, y, w, h);
+                drawRectangle(rectCanvas,
+                              x, y, w, h);
 
                 printf("Rectangle Drawn Successfully\n");
                 break;
@@ -141,16 +168,38 @@ int main()
             }
 
             case 3:
+            {
+                int x, y, h;
+
+                initialize(triCanvas);
+
+                printf("Enter top_x top_y height: ");
+                scanf("%d%d%d",
+                      &x, &y, &h);
+
+                drawTriangle(triCanvas,
+                             x, y, h);
+
+                printf("Triangle Drawn Successfully\n");
+                break;
+            }
+
+            case 4:
                 printf("\nRECTANGLE CANVAS\n");
                 display(rectCanvas);
                 break;
 
-            case 4:
+            case 5:
                 printf("\nLINE CANVAS\n");
                 display(lineCanvas);
                 break;
 
-            case 5:
+            case 6:
+                printf("\nTRIANGLE CANVAS\n");
+                display(triCanvas);
+                break;
+
+            case 7:
                 printf("Exiting...\n");
                 break;
 
@@ -158,7 +207,7 @@ int main()
                 printf("Invalid Choice\n");
         }
 
-    } while(choice != 5);
+    } while(choice != 7);
 
     return 0;
 }

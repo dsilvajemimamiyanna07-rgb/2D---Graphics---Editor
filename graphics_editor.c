@@ -7,6 +7,7 @@
 char rectCanvas[ROWS][COLS];
 char lineCanvas[ROWS][COLS];
 char triCanvas[ROWS][COLS];
+char circleCanvas[ROWS][COLS];
 
 /* Initialize Canvas */
 void initialize(char canvas[ROWS][COLS])
@@ -108,6 +109,28 @@ void drawTriangle(char canvas[ROWS][COLS],
     }
 }
 
+/* Circle */
+void drawCircle(char canvas[ROWS][COLS],
+                int cx, int cy,
+                int radius)
+{
+    int x, y;
+
+    for(y = 0; y < ROWS; y++)
+    {
+        for(x = 0; x < COLS; x++)
+        {
+            int dx = x - cx;
+            int dy = y - cy;
+
+            if(dx * dx + dy * dy <= radius * radius)
+            {
+                canvas[y][x] = '*';
+            }
+        }
+    }
+}
+
 int main()
 {
     int choice;
@@ -115,6 +138,7 @@ int main()
     initialize(rectCanvas);
     initialize(lineCanvas);
     initialize(triCanvas);
+    initialize(circleCanvas);
 
     do
     {
@@ -122,10 +146,12 @@ int main()
         printf("1. Draw Rectangle\n");
         printf("2. Draw Line\n");
         printf("3. Draw Triangle\n");
-        printf("4. Display Rectangle Canvas\n");
-        printf("5. Display Line Canvas\n");
-        printf("6. Display Triangle Canvas\n");
-        printf("7. Exit\n");
+        printf("4. Draw Circle\n");
+        printf("5. Display Rectangle Canvas\n");
+        printf("6. Display Line Canvas\n");
+        printf("7. Display Triangle Canvas\n");
+        printf("8. Display Circle Canvas\n");
+        printf("9. Exit\n");
 
         printf("Enter Choice: ");
         scanf("%d", &choice);
@@ -141,8 +167,7 @@ int main()
                 printf("Enter x y width height: ");
                 scanf("%d%d%d%d", &x, &y, &w, &h);
 
-                drawRectangle(rectCanvas,
-                              x, y, w, h);
+                drawRectangle(rectCanvas, x, y, w, h);
 
                 printf("Rectangle Drawn Successfully\n");
                 break;
@@ -155,13 +180,9 @@ int main()
                 initialize(lineCanvas);
 
                 printf("Enter x1 y1 x2 y2: ");
-                scanf("%d%d%d%d",
-                      &x1, &y1,
-                      &x2, &y2);
+                scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
 
-                drawLine(lineCanvas,
-                         x1, y1,
-                         x2, y2);
+                drawLine(lineCanvas, x1, y1, x2, y2);
 
                 printf("Line Drawn Successfully\n");
                 break;
@@ -174,32 +195,50 @@ int main()
                 initialize(triCanvas);
 
                 printf("Enter top_x top_y height: ");
-                scanf("%d%d%d",
-                      &x, &y, &h);
+                scanf("%d%d%d", &x, &y, &h);
 
-                drawTriangle(triCanvas,
-                             x, y, h);
+                drawTriangle(triCanvas, x, y, h);
 
                 printf("Triangle Drawn Successfully\n");
                 break;
             }
 
             case 4:
+            {
+                int cx, cy, r;
+
+                initialize(circleCanvas);
+
+                printf("Enter center_x center_y radius: ");
+                scanf("%d%d%d", &cx, &cy, &r);
+
+                drawCircle(circleCanvas, cx, cy, r);
+
+                printf("Circle Drawn Successfully\n");
+                break;
+            }
+
+            case 5:
                 printf("\nRECTANGLE CANVAS\n");
                 display(rectCanvas);
                 break;
 
-            case 5:
+            case 6:
                 printf("\nLINE CANVAS\n");
                 display(lineCanvas);
                 break;
 
-            case 6:
+            case 7:
                 printf("\nTRIANGLE CANVAS\n");
                 display(triCanvas);
                 break;
 
-            case 7:
+            case 8:
+                printf("\nCIRCLE CANVAS\n");
+                display(circleCanvas);
+                break;
+
+            case 9:
                 printf("Exiting...\n");
                 break;
 
@@ -207,7 +246,7 @@ int main()
                 printf("Invalid Choice\n");
         }
 
-    } while(choice != 7);
+    } while(choice != 9);
 
     return 0;
 }

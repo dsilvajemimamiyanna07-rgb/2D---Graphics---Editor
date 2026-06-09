@@ -40,7 +40,7 @@ void display(char canvas[ROWS][COLS])
     }
 }
 
-/* Rectangle */
+/* Draw Rectangle */
 void drawRectangle(char canvas[ROWS][COLS],
                    int x, int y,
                    int width, int height)
@@ -56,7 +56,7 @@ void drawRectangle(char canvas[ROWS][COLS],
     }
 }
 
-/* Line */
+/* Draw Line */
 void drawLine(char canvas[ROWS][COLS],
               int x1, int y1,
               int x2, int y2)
@@ -87,7 +87,7 @@ void drawLine(char canvas[ROWS][COLS],
     }
 }
 
-/* Triangle */
+/* Draw Triangle */
 void drawTriangle(char canvas[ROWS][COLS],
                   int x, int y,
                   int height)
@@ -109,7 +109,7 @@ void drawTriangle(char canvas[ROWS][COLS],
     }
 }
 
-/* Circle */
+/* Draw Circle */
 void drawCircle(char canvas[ROWS][COLS],
                 int cx, int cy,
                 int radius)
@@ -127,6 +127,22 @@ void drawCircle(char canvas[ROWS][COLS],
             {
                 canvas[y][x] = '*';
             }
+        }
+    }
+}
+
+/* Delete Object */
+void deleteObject(char canvas[ROWS][COLS],
+                  int x, int y,
+                  int width, int height)
+{
+    int i, j;
+
+    for(i = y; i < y + height && i < ROWS; i++)
+    {
+        for(j = x; j < x + width && j < COLS; j++)
+        {
+            canvas[i][j] = '_';
         }
     }
 }
@@ -151,7 +167,8 @@ int main()
         printf("6. Display Line Canvas\n");
         printf("7. Display Triangle Canvas\n");
         printf("8. Display Circle Canvas\n");
-        printf("9. Exit\n");
+        printf("9. Delete From Rectangle Canvas\n");
+        printf("10. Exit\n");
 
         printf("Enter Choice: ");
         scanf("%d", &choice);
@@ -239,6 +256,19 @@ int main()
                 break;
 
             case 9:
+            {
+                int x, y, w, h;
+
+                printf("Enter x y width height to delete: ");
+                scanf("%d%d%d%d", &x, &y, &w, &h);
+
+                deleteObject(rectCanvas, x, y, w, h);
+
+                printf("Object Deleted Successfully\n");
+                break;
+            }
+
+            case 10:
                 printf("Exiting...\n");
                 break;
 
@@ -246,7 +276,7 @@ int main()
                 printf("Invalid Choice\n");
         }
 
-    } while(choice != 9);
+    } while(choice != 10);
 
     return 0;
 }
